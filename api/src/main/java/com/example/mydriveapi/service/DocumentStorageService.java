@@ -66,12 +66,16 @@ public class DocumentStorageService {
     }
 
     public Resource loadFile(Long id, String username) throws Exception {
-        DocumentProperties documentPropertie = documentPropertiesRepository.findByDocumentIdAndUserId(id,userRepository.findByUserName(username).getId());
-        if (documentPropertie != null) {
+        DocumentProperties documentProperties = documentPropertiesRepository.findByDocumentIdAndUserId(id,userRepository.findByUserName(username).getId());
+        if (documentProperties != null) {
             try {
-                Path path = this.uploadDir.resolve(documentPropertie.getUploadDir());
+                Path path = this.uploadDir.resolve(documentProperties.getUploadDir());
                 Resource resource = new UrlResource(path.toUri());
-                return resource;
+                if(resource.exists()) {
+                    return resource;
+                } else {
+                    throw new FileNotFoundException("File not found: " + documentProperties);
+                }
             } catch (Exception e) {
             }
         }
