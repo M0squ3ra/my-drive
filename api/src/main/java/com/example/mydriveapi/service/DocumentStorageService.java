@@ -12,6 +12,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -48,7 +49,7 @@ public class DocumentStorageService {
             documentProperties.setUserId(userRepository.findByUserName(username).getId());
             documentProperties.setFileName(file.getOriginalFilename());
             documentProperties.setDocumentType(file.getContentType());
-            documentProperties.setUploadDir(this.uploadDir.resolve(username + "/" + file.getOriginalFilename()).toString());
+            documentProperties.setUploadDir(username + "/" + file.getOriginalFilename());
             documentPropertiesRepository.save(documentProperties);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -60,12 +61,21 @@ public class DocumentStorageService {
         return documentProperties;
     }
 
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(uploadDir.toFile());
-    }
-
     public List<DocumentProperties> getAllDocumentProperties(String username) {
         return documentPropertiesRepository.findByUserId(userRepository.findByUserName(username).getId());
+    }
+
+    public Resource loadFile(Long id, String username) throws Exception {
+        DocumentProperties documentPropertie = documentPropertiesRepository.findByDocumentIdAndUserId(id,userRepository.findByUserName(username).getId());
+        if (documentPropertie != null) {
+            try {
+                Path path = this.uploadDir.resolve(documentPropertie.getUploadDir());
+                Resource resource = new UrlResource(path.toUri());
+                return resource;
+            } catch (Exception e) {
+            }
+        }
+        return null;
     }
 
     public Path getUploadDir() {

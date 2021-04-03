@@ -4,8 +4,10 @@ import com.example.mydriveapi.domain.DocumentProperties;
 import com.example.mydriveapi.security.jwt.JwtTokenUtil;
 import com.example.mydriveapi.service.DocumentStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +38,16 @@ public class FilesController {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
         }
+    }
+
+    @PostMapping("/download/{documentId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long documentId, @RequestHeader("Authorization") String token)
+            throws Exception {
+        Resource resource = documentStorageService.loadFile(documentId, getUsername(token));
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(documentStorageService.getDocumentProperties(documentId, getUsername(token)).getDocumentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 
     @GetMapping("/files")
