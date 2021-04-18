@@ -1,0 +1,79 @@
+.Interface{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.Header{
+  background-color: red;
+  height: 7vh;
+}
+.Header h2{
+  margin: 0;
+}
+
+.LeftBox{
+  background-color: #F2F2F2;
+  width: 200px;
+  min-height: calc(100vh - 7vh);
+  display: inline-block;
+}
+
+.LeftBox ul{
+  text-decoration: none;
+  padding: 0;
+}
+
+.LeftBox ul li{
+  display: block;
+  padding: 8px;
+}
+
+.LeftBox ul li a{
+  text-decoration: none;
+  color: black;
+}
+
+.RightBox{
+  display: inline-block;  
+  text-align: center;
+  min-height: calc(100vh - 7vh);
+  width: calc(100% - 200px);
+  vertical-align: top;  
+}
+
+.SearchBar{
+  width: 100%;
+}
+
+.SearchBar input{
+  margin-top: 24px;
+  margin-bottom: 10px;
+  width: 450px;
+  border-radius: 8px;
+}
+
+.SearchBar button{
+  border-radius: 8px;
+}
+
+.ItemsBox{
+  background-color: greenyellow;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.ItemBox{
+  background-color: blueviolet;
+  width: 100px;
+  height: 100px;
+  margin: 8px;
+  padding: 8px;
+  border-radius: 8px;
+}

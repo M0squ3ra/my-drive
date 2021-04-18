@@ -20,4 +20,6 @@ public class DocumentProperties {
     private String documentType;
     @JsonIgnore
     private String uploadDir;
+
+//    public (boolean) and link
 }
