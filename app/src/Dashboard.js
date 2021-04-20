@@ -1,9 +1,9 @@
 import React from 'react';
-import './Interface.css'
+import './Dashboard.css'
 
-function Interface(){
+function Dashboard(){
   return(
-    <div className="Interface">
+    <div className="Dashboard">
       <Header></Header>
       <LeftBox></LeftBox>
       <RightBox></RightBox>
@@ -36,6 +36,7 @@ function LeftBox(){
               <a href="#">Papelera</a>
           </li>
       </ul>
+      <h3>User: {localStorage.getItem("username")}</h3>
     </div>
   );
 }
@@ -125,4 +126,4 @@ function RightBox(){
   )
 }
 
-export default Interface;
+export default Dashboard;
