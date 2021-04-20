@@ -1,14 +1,24 @@
 import React from 'react';
-import './Dashboard.css'
+import './Dashboard.css';
+import { Redirect } from 'react-router-dom';
 
-function Dashboard(){
-  return(
-    <div className="Dashboard">
-      <Header></Header>
-      <LeftBox></LeftBox>
-      <RightBox></RightBox>
-    </div>
-  );
+class Dashboard extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    if (!localStorage.getItem("token")) {
+      return (<Redirect to='auth/login'/>);
+    }
+    return(
+      <div className="Dashboard">
+        <Header></Header>
+        <LeftBox></LeftBox>
+        <RightBox></RightBox>
+      </div>
+    );
+  }
 }
 
 function Header(){

@@ -10,9 +10,9 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <Switch>
-          <Route path='/auth/login' component={Login}/>
-          <Route path='/dashboard' component={Dashboard}/>
-          {!localStorage.getItem("token") && <Redirect to='auth/login'/>}
+            <Route path='/auth/login' component={Login}/>
+            <Route path='/dashboard' component={Dashboard}/>
+            {!localStorage.getItem("token") && <Redirect to='auth/login'/>}
           </Switch>
         </BrowserRouter>
       </div>
