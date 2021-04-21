@@ -6,6 +6,22 @@ import Axios from 'axios';
 class Dashboard extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      files: []
+    }
+    this.getFiles = this.getFiles.bind(this);
+  }
+
+  getFiles(search){
+    const headers = {Authorization: 'Bearer ' + localStorage.getItem("token")}
+    const data = {search: search};
+
+    Axios.post('http://localhost:8080/files',
+      data,
+      {headers: headers}
+    ).then((response) => {
+        this.setState({files: response.data});
+    });
   }
 
   render(){
@@ -16,7 +32,7 @@ class Dashboard extends React.Component{
       <div className="Dashboard">
         <Header></Header>
         <LeftBox></LeftBox>
-        <RightBox></RightBox>
+        <RightBox dashboardState={this.state} getFiles={this.getFiles}></RightBox>
       </div>
     );
   }
@@ -59,7 +75,7 @@ function LeftBox(){
 function SearchResult(props){
   return(
     <div className="SearchResult">
-      {props.search != null &&
+      {props.search !== "" &&
         <h2>Result for: {props.search}</h2>
       }
     </div>
@@ -73,18 +89,17 @@ class SearchBar extends React.Component{
   }
 
   handleClickSearch(){
-    this.setState({search: this.state.name},
-      () => console.log(this.state.search));
+    this.search();
   }
   handleEnterSearch(key){
     if(key.code === 'Enter'){
-      this.setState({search: this.state.name},
-        () => this.search());
+      this.search();
     }
   }
 
   search(){
-    console.log(this.state.search)
+    this.setState({search: this.state.name},
+      () => this.props.getFiles(this.state.search));
   }
 
   render(){
@@ -118,47 +133,38 @@ class ItemBox extends React.Component{
 }
 
 class ItemsBox extends React.Component{
+  //hasta aca
   constructor(props){
     super(props);
-    this.state = {
-      files: []
-    }
-    this.getFiles.bind(this);
-  }
-
-
-  getFiles(search){
-    const headers = {Authorization: 'Bearer ' + localStorage.getItem("token")}
-    const data = {search: search};
-
-    Axios.post('http://localhost:8080/files',
-      data,
-      {headers: headers}
-    ).then((response) => {
-        this.setState({files: response.data});
-    });
   }
 
   componentDidMount(){
-    this.getFiles('');
+    this.props.getFiles('');
   }
 
   render(){
     return(
       <div className="ItemsBox">    
-          {this.state.files.map(file => <ItemBox key={file.documentId.toString()} file={file}></ItemBox>)}
+          {this.props.dashboardState.files.map(file => <ItemBox key={file.documentId.toString()} file={file}></ItemBox>)}
       </div>
     );
   }
 }
 
-function RightBox(){
-  return(
-    <div className="RightBox">
-      <SearchBar></SearchBar>
-      <ItemsBox></ItemsBox>
-    </div>
-  )
+class RightBox extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  
+  render(){
+    return(
+      <div className="RightBox">
+        <SearchBar getFiles={this.props.getFiles}></SearchBar>
+        <ItemsBox dashboardState={this.props.dashboardState} getFiles={this.props.getFiles}></ItemsBox>
+      </div>
+    );
+  };
+  
 }
 
 export default Dashboard;

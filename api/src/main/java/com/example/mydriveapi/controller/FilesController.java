@@ -75,7 +75,7 @@ public class FilesController {
         List<DocumentProperties> documents = documentStorageService.getAllDocumentProperties(getUsername(token));
         List<DocumentProperties> response = new ArrayList<DocumentProperties>();
         for (DocumentProperties i: documents)
-            if(i.getFileName().contains(search.getSearch()))
+            if(i.getFileName().toUpperCase().contains(search.getSearch().toUpperCase()))
                 response.add(i);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

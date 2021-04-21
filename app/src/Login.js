@@ -31,15 +31,21 @@ class Login extends React.Component{
         }); 
     } 
 
+    handleEnterLogin(key){
+        if(key.code === 'Enter'){
+            this.handleLogin();
+        }
+    }
+
     render(){
         return(
             <div className="Login">
                 <div className="CentralBox">
                     <h1>Login</h1>
                     <label>Username</label><br/>
-                    <input type="text" placeholder="User" onChange={event => this.setState({usernameLog: event.target.value})}/><br/>
+                    <input type="text" onKeyPress={this.handleEnterLogin.bind(this)} placeholder="User" onChange={event => this.setState({usernameLog: event.target.value})}/><br/>
                     <label>Password </label><br/>
-                    <input type="password" placeholder="Pass" onChange={event => this.setState({passwordLog: event.target.value})}/><br/>
+                    <input type="password" onKeyPress={this.handleEnterLogin.bind(this)} placeholder="Pass" onChange={event => this.setState({passwordLog: event.target.value})}/><br/>
                     <button type="submit" onClick={this.handleLogin}>Login</button>
                     {this.state.loginStatus === true?<Redirect to='/dashboard'/>:<Redirect to='/auth/login'/>}
                 </div>
