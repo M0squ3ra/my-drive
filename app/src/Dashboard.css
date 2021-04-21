@@ -5,11 +5,38 @@
 }
 
 .Header{
-  background-color: red;
+  background: greenyellow;
   height: 7vh;
+  position: relative;
 }
 .Header h2{
+  position: absolute;
+  top: 8px;
+  left: 50px;
+  color: white;
   margin: 0;
+}
+
+.UserInfo{
+  position: absolute;
+  bottom: -6px;
+  right: 16px;
+}
+
+.UserInfo h3{
+  padding-right: 8px;
+}
+
+.UserInfo button{
+  border-width:0px;
+  border:none;
+  border-radius: 8px;
+  background-color: wheat;
+}
+
+.UserInfo h3,
+.UserInfo button{
+  display: inline-block;
 }
 
 .LeftBox{
@@ -53,22 +80,40 @@
 
 .SearchBar{
   width: 100%;
+  margin-top: 25px;
 }
 
 .SearchBar input{
   margin-top: 24px;
   margin-bottom: 10px;
   width: 450px;
-  border-radius: 8px;
+  height: 30px;
+  border-radius: 24px;
+  background-color: #F2F2F2;
+  padding-left: 16px;
+}
+.SearchBar input,
+.SearchBar input:focus{
+  border-width:0px;
+  border:none;
+  outline: none;
 }
 
 .SearchBar button{
-  border-radius: 8px;
+  height: 30px;
+  width: 120px;
+  color: white;
+  background-color: greenyellow;
+  border-radius: 24px;
+  border-width:0px;
+  border:none;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .ItemsBox{
-  background-color: greenyellow;
   margin: 0;
+  margin-top: 50px;
   padding: 0;
   width: 100%;
   height: 100%;
@@ -79,10 +124,36 @@
 }
 
 .ItemBox{
-  background-color: blueviolet;
+  background-color: #F2F2F2;
   width: 100px;
-  height: 100px;
+  height: 120px;
   margin: 8px;
   padding: 8px;
   border-radius: 8px;
+  position: relative;
+}
+
+.ItemBox:hover{
+  margin: 7px;
+  border: solid 1px grey;
+}
+
+.ItemBox p{
+  position: absolute;
+  font-weight: normal;
+  font-size: 12px;
+  padding: 8px;
+  top: 50px;
+  left: 0;
+}
+
+.ItemBox button{
+  background-color: greenyellow;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  bottom: 5px;
+  left: 19px;
+  border-radius: 8px;
+  border: none;
 }

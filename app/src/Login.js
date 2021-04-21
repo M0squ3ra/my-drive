@@ -21,7 +21,7 @@ class Login extends React.Component{
             username: this.state.usernameLog,
             password: this.state.passwordLog
         }).then((response) => {
-            localStorage.setItem("token","Bearer " + response.data.token); //puede ser que tenga que remover el Bearer
+            localStorage.setItem("token",response.data.token); //puede ser que tenga que remover el Bearer
             localStorage.setItem("username",this.state.usernameLog);
             this.setState({loginStatus: true});
         }).catch(err => {

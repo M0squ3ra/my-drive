@@ -1,6 +1,7 @@
 package com.example.mydriveapi.controller;
 
 import com.example.mydriveapi.domain.DocumentProperties;
+import com.example.mydriveapi.other.Search;
 import com.example.mydriveapi.security.jwt.JwtTokenUtil;
 import com.example.mydriveapi.service.DocumentStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +70,14 @@ public class FilesController {
                 .body(resource);
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<List<DocumentProperties>> getListFiles(@RequestHeader("Authorization") String token) {
+    @PostMapping("/files")
+    public ResponseEntity<List<DocumentProperties>> getListFiles(@RequestHeader("Authorization") String token, @RequestBody Search search) {
         List<DocumentProperties> documents = documentStorageService.getAllDocumentProperties(getUsername(token));
-        return ResponseEntity.status(HttpStatus.OK).body(documents);
+        List<DocumentProperties> response = new ArrayList<DocumentProperties>();
+        for (DocumentProperties i: documents)
+            if(i.getFileName().contains(search.getSearch()))
+                response.add(i);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/files/{documentId}")

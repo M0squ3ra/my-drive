@@ -1,6 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+import Axios from 'axios';
 
 class Dashboard extends React.Component{
   constructor(props){
@@ -21,10 +22,15 @@ class Dashboard extends React.Component{
   }
 }
 
+
 function Header(){
   return(
     <div className="Header">
       <h2>MyDrive</h2>
+      <div className='UserInfo'>
+        <h3>User: {localStorage.getItem("username")}</h3>
+        <button>Logout</button>
+      </div>
     </div>
   );
 }
@@ -46,7 +52,6 @@ function LeftBox(){
               <a href="#">Papelera</a>
           </li>
       </ul>
-      <h3>User: {localStorage.getItem("username")}</h3>
     </div>
   );
 }
@@ -64,11 +69,22 @@ function SearchResult(props){
 class SearchBar extends React.Component{
   constructor(props){
     super(props);
-    this.state = {name: null, search: null};
+    this.state = {name: "", search: ""};
   }
 
   handleClickSearch(){
-    this.setState({search: this.state.name});
+    this.setState({search: this.state.name},
+      () => console.log(this.state.search));
+  }
+  handleEnterSearch(key){
+    if(key.code === 'Enter'){
+      this.setState({search: this.state.name},
+        () => this.search());
+    }
+  }
+
+  search(){
+    console.log(this.state.search)
   }
 
   render(){
@@ -76,8 +92,9 @@ class SearchBar extends React.Component{
       <div className="SearchBar">
         <input 
           type="text"
-          placeholder="search"
+          placeholder="Search"
           onChange={event => this.setState({name: event.target.value})}
+          onKeyPress={this.handleEnterSearch.bind(this)}
         />
         <button type="submit" onClick={this.handleClickSearch.bind(this)}>Search</button>
         <SearchResult search={this.state.search}></SearchResult>
@@ -93,34 +110,43 @@ class ItemBox extends React.Component{
   render(){
     return(
       <div className="ItemBox">
-        <h3>{this.props.name}</h3>
+        <p>{this.props.file.fileName.substring(0,40) + '...'}</p>
+        <button>Descargar</button>
       </div>
     );
   }
 }
 
-class File{
-  constructor(name,type){
-    this.name = name;
-    this.type = type;
-  }
-}
-
-// delete
-var files = [];
-files.push(new File('File1','txt'));
-files.push(new File('File2','txt'));
-files.push(new File('File3','txt'));
-
 class ItemsBox extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      files: []
+    }
+    this.getFiles.bind(this);
+  }
+
+
+  getFiles(search){
+    const headers = {Authorization: 'Bearer ' + localStorage.getItem("token")}
+    const data = {search: search};
+
+    Axios.post('http://localhost:8080/files',
+      data,
+      {headers: headers}
+    ).then((response) => {
+        this.setState({files: response.data});
+    });
+  }
+
+  componentDidMount(){
+    this.getFiles('');
   }
 
   render(){
     return(
-      <div className="ItemsBox">     
-          {files.map(file => <ItemBox name={file.name}></ItemBox>)}
+      <div className="ItemsBox">    
+          {this.state.files.map(file => <ItemBox key={file.documentId.toString()} file={file}></ItemBox>)}
       </div>
     );
   }
@@ -130,7 +156,6 @@ function RightBox(){
   return(
     <div className="RightBox">
       <SearchBar></SearchBar>
-      <h1>center</h1>
       <ItemsBox></ItemsBox>
     </div>
   )
