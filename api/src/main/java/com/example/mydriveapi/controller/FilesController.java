@@ -31,7 +31,7 @@ public class FilesController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity uploadFile(@RequestParam("file") List<MultipartFile> files, @RequestHeader("Authorization") String token) {
+    public ResponseEntity uploadFile(@RequestParam("files") List<MultipartFile> files, @RequestHeader("Authorization") String token) {
         String message = "";
         boolean fail = false;
         List<String> filesError = new ArrayList<String>();

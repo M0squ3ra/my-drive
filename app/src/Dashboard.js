@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Dashboard.css';
 import { Redirect, useHistory } from 'react-router-dom';
 import Axios from 'axios';
@@ -51,25 +51,51 @@ function Header(){
   );
 }
 
-function LeftBox(){
-  return(
-    <div className="LeftBox">
-      <ul>
-          <li>
-              <a href="#">Todos los archivos</a>
-          </li>
-          <li>
-              <a href="#">Privados</a>
-          </li>
-          <li>
-              <a href="#">Publicos</a>
-          </li>
-          <li>
-              <a href="#">Papelera</a>
-          </li>
-      </ul>
-    </div>
-  );
+class LeftBox extends React.Component{
+  constructor(props){
+    super(props);
+    this.inputFile = React.createRef();
+    this.handleUpload = this.handleUpload.bind(this);
+  }
+
+  handleUpload = (e) => {
+
+    const headers = {Authorization: 'Bearer ' + localStorage.getItem("token")}
+    const data = new FormData();
+    
+    Array.prototype.forEach.call(e.target.files,(file) => data.append("files",file));
+
+    Axios.post('http://localhost:8080/upload',
+      data,
+      {headers: headers}
+    ).then((response) => {
+        console.log('sent');
+    });
+
+  }
+
+  render(){
+    return(
+      <div className="LeftBox">
+        <button onClick={() => this.inputFile.current.click()}>Subir Archivos</button>
+        <input type="file" multiple="multiple" ref={this.inputFile} onChange={this.handleUpload}/>
+        <ul>
+            <li>
+                <a href="#">Todos los archivos</a>
+            </li>
+            <li>
+                <a href="#">Privados</a>
+            </li>
+            <li>
+                <a href="#">Publicos</a>
+            </li>
+            <li>
+                <a href="#">Papelera</a>
+            </li>
+        </ul>
+      </div>
+    );
+  }
 }
 
 function SearchResult(props){
@@ -133,7 +159,6 @@ class ItemBox extends React.Component{
 }
 
 class ItemsBox extends React.Component{
-  //hasta aca
   constructor(props){
     super(props);
   }
