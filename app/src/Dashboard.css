@@ -139,9 +139,9 @@
 }
 
 .ItemBox{
-  background-color: #F2F2F2;
+  background-color: #dadada;
   width: 100px;
-  height: 120px;
+  height: 130px;
   margin: 8px;
   padding: 8px;
   border-radius: 8px;
@@ -153,13 +153,19 @@
   border: solid 1px grey;
 }
 
+.ItemBox img{
+  width: 60px;
+  height: 60px;
+}
+
 .ItemBox p{
   position: absolute;
   font-weight: normal;
   font-size: 12px;
   padding: 8px;
-  top: 50px;
+  top: 60px;
   left: 0;
+  text-align: center;
 }
 
 .ItemBox button{

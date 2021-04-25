@@ -171,6 +171,28 @@ class ItemBox extends React.Component{
   constructor(props){
     super(props);
     this.handlerDownload = this.handlerDownload.bind(this);
+    switch(true){
+      case /image/.test(this.props.file.documentType):
+        this.icon = "./icons/Images-256.png";
+        break;
+      case /audio/.test(this.props.file.documentType):
+        this.icon = "./icons/Beamed-Notes-256.png"
+        break;
+      case /video/.test(this.props.file.documentType):
+        this.icon = "./icons/Video-256.png";
+        break;
+      case /document/.test(this.props.file.documentType):
+        this.icon = "./icons/Document-256.png";
+        break;
+      case /text/.test(this.props.file.documentType):
+        this.icon = "./icons/Text-Document-256.png";
+        break;
+      case /zip/.test(this.props.file.documentType):
+        this.icon = "./icons/File-Format-ZIP-256.png";
+        break;
+      default:
+        this.icon = "./icons/Document-02-256.png"
+    }
   }
 
   handlerDownload(){
@@ -195,6 +217,7 @@ class ItemBox extends React.Component{
   render(){
     return(
       <div className="ItemBox">
+        <img src={this.icon}/>
         <p>{this.props.file.fileName.substring(0,40) + '...'}</p>
         <button onClick={this.handlerDownload}>Descargar</button>
       </div>
