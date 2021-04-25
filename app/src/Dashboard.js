@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import './Dashboard.css';
 import { Redirect, useHistory } from 'react-router-dom';
 import Axios from 'axios';
+import fileDownload from 'js-file-download';
 
 class Dashboard extends React.Component{
   constructor(props){
@@ -25,13 +26,14 @@ class Dashboard extends React.Component{
   }
 
   render(){
+
     if (!localStorage.getItem("token")) {
       return (<Redirect to='auth/login'/>);
     }
     return(
       <div className="Dashboard">
         <Header></Header>
-        <LeftBox></LeftBox>
+        <LeftBox getFiles={this.getFiles}></LeftBox>
         <RightBox dashboardState={this.state} getFiles={this.getFiles}></RightBox>
       </div>
     );
@@ -65,12 +67,13 @@ class LeftBox extends React.Component{
     
     Array.prototype.forEach.call(e.target.files,(file) => data.append("files",file));
 
-    Axios.post('http://localhost:8080/upload',
-      data,
-      {headers: headers}
-    ).then((response) => {
-        console.log('sent');
-    });
+    console.log(data.getAll('files')[0])
+    // Axios.post('http://localhost:8080/upload',
+    //   data,
+    //   {headers: headers}
+    // ).then((response) => {
+    //   this.props.getFiles('');
+    // });    
 
   }
 
@@ -147,12 +150,33 @@ class SearchBar extends React.Component{
 class ItemBox extends React.Component{
   constructor(props){
     super(props);
+    this.handlerDownload = this.handlerDownload.bind(this);
   }
+
+  handlerDownload(){
+
+    const headers = {Authorization: 'Bearer ' + localStorage.getItem("token")};
+    const data = {}
+
+    Axios.post('http://localhost:8080/download/' + this.props.file.documentId, 
+      data,
+      {responseType: 'arraybuffer',
+      headers: headers}
+    ).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data],{type: response.headers['content-type']}));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', this.props.file.fileName);
+      link.click();
+      link.remove();
+   });
+  }
+
   render(){
     return(
       <div className="ItemBox">
         <p>{this.props.file.fileName.substring(0,40) + '...'}</p>
-        <button>Descargar</button>
+        <button onClick={this.handlerDownload}>Descargar</button>
       </div>
     );
   }

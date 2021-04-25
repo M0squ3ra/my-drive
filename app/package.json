@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "axios": "^0.21.1",
+    "js-file-download": "^0.4.12",
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
