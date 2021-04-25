@@ -67,13 +67,12 @@ class LeftBox extends React.Component{
     
     Array.prototype.forEach.call(e.target.files,(file) => data.append("files",file));
 
-    console.log(data.getAll('files')[0])
-    // Axios.post('http://localhost:8080/upload',
-    //   data,
-    //   {headers: headers}
-    // ).then((response) => {
-    //   this.props.getFiles('');
-    // });    
+    Axios.post('http://localhost:8080/upload',
+      data,
+      {headers: headers}
+    ).then((response) => {
+      this.props.getFiles('');
+    });    
 
   }
 
