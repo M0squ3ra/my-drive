@@ -41,16 +41,37 @@ class Dashboard extends React.Component{
 }
 
 
-function Header(){
-  return(
+class Header extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      redirect: false
+    }
+    this.handleLogout = this.handleLogout.bind(this)
+  }
+
+  handleLogout(){
+    localStorage.clear();
+    this.setState({redirect: true})
+  }
+
+  render(){
+
+    const redirect = this.state.redirect;
+
+     if (redirect) {
+       return <Redirect to='/auth/login'/>;
+     }
+
+    return(
     <div className="Header">
       <h2>MyDrive</h2>
       <div className='UserInfo'>
         <h3>User: {localStorage.getItem("username")}</h3>
-        <button>Logout</button>
+        <button onClick={this.handleLogout}>Logout</button>
       </div>
     </div>
-  );
+  );}
 }
 
 class LeftBox extends React.Component{
