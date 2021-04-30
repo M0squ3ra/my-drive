@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Login.css'
 import Axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 class Login extends React.Component{
     constructor(props){
@@ -9,7 +9,8 @@ class Login extends React.Component{
         this.state = {
             usernameLog: "",
             passwordLog: "",
-            loginStatus: false
+            loginStatus: false,
+            redirect: false
         }
         this.handleLogin = this.handleLogin.bind(this);
     }
@@ -36,8 +37,15 @@ class Login extends React.Component{
             this.handleLogin();
         }
     }
+    
 
     render(){
+        const redirect = this.state.redirect;
+
+        if (redirect) {
+            return <Redirect to='/register'/>;
+        }
+
         return(
             <div className="Login">
                 <div className="CentralBox">
@@ -47,6 +55,7 @@ class Login extends React.Component{
                     <label>Password </label><br/>
                     <input type="password" onKeyPress={this.handleEnterLogin.bind(this)} placeholder="Pass" onChange={event => this.setState({passwordLog: event.target.value})}/><br/>
                     <button type="submit" onClick={this.handleLogin}>Login</button>
+                    <button type="submit" onClick={() => this.setState({redirect: true})}>Sign Up</button>
                     {this.state.loginStatus === true?<Redirect to='/dashboard'/>:<Redirect to='/auth/login'/>}
                 </div>
             </div>

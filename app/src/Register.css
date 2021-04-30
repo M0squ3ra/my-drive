@@ -1,8 +1,8 @@
-.Login *{
+.Register *{
     margin: 8px;
 }
 
-.Login {
+.Register {
     background: white;
     color: white;
     font-weight: bold;
@@ -43,6 +43,10 @@
     outline: none;
 }
 
+.CentralBox p{
+    color: red;
+}
+
 .CentralBox button{
     height: 40px;
     width: 120px;
@@ -52,3 +56,24 @@
     border:none;
     margin: 0 12px;
 }
+
+.Error1, .Error2, .Error3{
+    position: absolute;
+    font-size: 12px;
+}
+
+.Error1{
+    top: 185px;
+    left: 48px;
+}
+
+.Error2{
+    top: 265px;
+    left: 68px;
+}
+
+.Error3 {
+    top: 345px;
+    left: 135px;
+}
+

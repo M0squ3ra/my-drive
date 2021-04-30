@@ -1,7 +1,8 @@
 import './App.css';
 import Dashboard from './Dashboard.js';
 import Login from './Login';
-import { Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
+import Register from './Register'
+import { Switch, Route, BrowserRouter, Redirect, withRouter} from 'react-router-dom';
 import React from 'react';
 
 class App extends React.Component {
@@ -12,7 +13,8 @@ class App extends React.Component {
           <Switch>
             <Route path='/auth/login' component={Login}/>
             <Route path='/dashboard' component={Dashboard}/>
-            {!localStorage.getItem("token") && <Redirect to='auth/login'/>}
+            <Route path='/register' component={Register}/>
+            {(!localStorage.getItem("token") && this.props.location.pathname !== '/register') && <Redirect to='auth/login'/>}
           </Switch>
         </BrowserRouter>
       </div>
@@ -21,4 +23,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default withRouter(App);
