@@ -102,20 +102,6 @@ class LeftBox extends React.Component{
       <div className="LeftBox">
         <button onClick={() => this.inputFile.current.click()}>Subir Archivos</button>
         <input type="file" multiple="multiple" ref={this.inputFile} onChange={this.handleUpload}/>
-        <ul>
-            <li>
-                <a href="#">Todos los archivos</a>
-            </li>
-            <li>
-                <a href="#">Privados</a>
-            </li>
-            <li>
-                <a href="#">Publicos</a>
-            </li>
-            <li>
-                <a href="#">Papelera</a>
-            </li>
-        </ul>
       </div>
     );
   }
