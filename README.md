@@ -15,7 +15,7 @@ Create a Postgresql user, go to the application.properties file and put your use
 Start Backend
 ```bash
 cd api
-mvn mvn spring-boot:run 
+mvn spring-boot:run 
 ```
 
 Start WebApp
