@@ -6,6 +6,7 @@ Feel free to use this code in your projects.
 ## Requirements 
 - Postgresql
 - npm
+- Maven (mvn)
 
 ## Setup
 - Create a Postgresql user, go to the application.properties file and put your username on the spring.datasource.username line and your password on the spring.datasource.password line.
