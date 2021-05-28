@@ -5,7 +5,7 @@ Feel free to use this code in your projects.
 
 ## Requirements 
 - Postgresql
-- npm
+- Node Package Manager (npm)
 - Maven (mvn)
 
 ## Setup
