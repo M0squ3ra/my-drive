@@ -5,17 +5,23 @@ Feel free to use this code in your projects.
 
 ## Requirements 
 - Postgresql
-- npm
+- Node Package Manager (npm)
+- Maven (mvn)
 
 ## Setup
-Create a Postgresql user, go to the application.properties file and put your username on the spring.datasource.username line and your password on the spring.datasource.password line.
+- Create a Postgresql user, go to the application.properties file and put your username on the spring.datasource.username line and your password on the spring.datasource.password line.
+- Install node modules:
+```bash
+cd app
+npm install 
+```
 
 ## Usage
 
 Start Backend
 ```bash
 cd api
-mvn mvn spring-boot:run 
+mvn spring-boot:run 
 ```
 
 Start WebApp
