@@ -28,7 +28,7 @@ class Dashboard extends React.Component{
   render(){
 
     if (!localStorage.getItem("token")) {
-      return (<Redirect to='auth/login'/>);
+      return (<Redirect to='/auth/login'/>);
     }
     return(
       <div className="Dashboard">

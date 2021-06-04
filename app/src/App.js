@@ -14,7 +14,7 @@ class App extends React.Component {
             <Route path='/auth/login' component={Login}/>
             <Route path='/dashboard' component={Dashboard}/>
             <Route path='/register' component={Register}/>
-            {(!localStorage.getItem("token") && this.props.location.pathname !== '/register') && <Redirect to='auth/login'/>}
+            {(!localStorage.getItem("token") && this.props.location.pathname !== '/register') && <Redirect to='/auth/login'/>}
           </Switch>
         </BrowserRouter>
       </div>
