@@ -10,7 +10,7 @@ Feel free to use this code in your projects.
 
 ## Setup
 - Create a Postgresql user and a database
-- Go to the application.properties file modify the lines 2,3 and 4 with your username, password and the url of the database. The first lines should look like this:
+- Go to the application.properties file modify the lines 2,3 and 4 with the url of the database, your username and password. The first lines should look like this:
 ```
 #Database
 spring.datasource.url=jdbc:postgresql://localhost:5432/mydrive
