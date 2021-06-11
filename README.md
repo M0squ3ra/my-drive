@@ -9,7 +9,14 @@ Feel free to use this code in your projects.
 - Maven (mvn)
 
 ## Setup
-- Create a Postgresql user, go to the application.properties file and put your username on the spring.datasource.username line and your password on the spring.datasource.password line.
+- Create a Postgresql user and a database
+- Go to the application.properties file modify the lines 2,3 and 4 with your username, password and the url of the database. The first lines should look like this:
+```
+#Database
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydrive
+spring.datasource.username=postgres
+spring.datasource.password=password
+```
 - Install node modules:
 ```bash
 cd app
