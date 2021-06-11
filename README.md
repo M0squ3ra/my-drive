@@ -30,4 +30,4 @@ cd app
 npm start
 ```
 
-The WebApp is running on http://localhost:3000
+The WebApp is running on http://localhost:3000. The login page is in http://localhost:3000/auth/login
